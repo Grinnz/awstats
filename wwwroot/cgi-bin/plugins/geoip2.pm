@@ -99,7 +99,7 @@ sub GetCountryCodeByAddr_geoip2 {
 	my $res= TmpLookup_geoip2($param);
 	if (! $res) {
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param",5); }
-		eval { $res=lc($reader->country( ip => $param )->country()->iso_code()); 1 } || $res='unknown';
+		eval { $res=lc($reader->country( ip => $param )->country()->iso_code()); 1 } or $res='unknown';
 		$TmpDomainLookup{$param}=$res;
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: [$res]",5); }
 	}
@@ -124,7 +124,7 @@ sub GetCountryCodeByName_geoip2 {
         $address = inet_ntoa(inet_aton($param));
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 $param resolved to $address",5); }
         # Now do the same lookup from the IP
-		eval { $res=lc($reader->country( ip => $address )->country()->iso_code()); 1 } || $res='unknown';
+		eval { $res=lc($reader->country( ip => $address )->country()->iso_code()); 1 } or $res='unknown';
 		$TmpDomainLookup{$param}=$res;
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: [$res]",5); }
 	}
