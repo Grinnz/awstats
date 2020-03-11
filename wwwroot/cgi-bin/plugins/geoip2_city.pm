@@ -277,7 +277,7 @@ sub ShowInfoHost_geoip2_city {
 			{
 	        	my $record=();
 	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param",5); }
-	        	$record=$geoip2_city->city(ip=>$param) if $geoip2_city;
+	        	$record=eval { $geoip2_city->city(ip=>$param); 1 } if $geoip2_city;
 	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [".$record->city()->name()."]",5); }
 	            $country=$record->country()->iso_code() if $record;
 	            $city=$record->city()->name() if $record;
@@ -312,7 +312,7 @@ sub ShowInfoHost_geoip2_city {
                     # Now do the same lookup from the IP
                     # GeoIP2::Reader doesn't support lookups for Private IPs
                     if (!is_private_ip($address)){
-                    $record=$geoip2_city->city(ip=>$address) if $geoip2_city;
+                    $record=eval { $geoip2_city->city(ip=>$address); 1 } if $geoip2_city;
                     if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [$record]",5); }
                     $country=$record->country()->iso_code() if $record;
                     $city=$record->city()->name() if $record;
@@ -364,7 +364,7 @@ sub SectionProcessIp_geoip2_city {
         $record->country_code = $rec[3];
     }else{
         if ($Debug) { debug("  Plugin $PluginName: SectionProcessIp_geoip2_city for $param",5); }
-        $record=$geoip2_city->city(ip=>$param) if $geoip2_city;
+        $record=eval { $geoip2_city->city(ip=>$param); 1 } if $geoip2_city;
     }
     if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [".$record->city()->name()."]",5); }
     if ($record) {
@@ -404,7 +404,7 @@ sub SectionProcessHostname_geoip2_city {
         $address = inet_ntoa(inet_aton($param));
 		if ($Debug) { debug("  Plugin $PluginName: SectionProcessHostname_geoip2_city $param resolved to $address",5); }
         # Now do the same lookup from the IP
-        $record=$geoip2_city->city(ip=>$address) if $geoip2_city;
+        $record=eval { $geoip2_city->city(ip=>$address); 1 } if $geoip2_city;
     }
     if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [$record]",5); }
     if ($record) {
