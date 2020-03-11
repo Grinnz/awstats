@@ -180,7 +180,7 @@ sub ShowInfoHost_geoip2 {
 		if ($key && $ip==4) {
         	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param key=$key ip=$ip",5); }
 			my $res = TmpLookup_geoip2($param);
-        	if (!$res){eval { $res=lc($reader->country( ip => $param )->country()->iso_code()); 1 } || $res='unknown' if $reader;}
+        	if (!$res){eval { $res=lc($reader->country( ip => $param )->country()->iso_code()); 1 } if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
@@ -188,7 +188,7 @@ sub ShowInfoHost_geoip2 {
 		if ($key && $ip==6) {                              # GeoIP2 supports both IPv4 and IPv6
         	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param key=$key ip=$ip",5); }
 			my $res = TmpLookup_geoip2($param);
-        	if (!$res){eval { $res=lc($reader->country( ip => $param )->country()->iso_code()); 1 } || $res='unknown' if $reader;}
+        	if (!$res){eval { $res=lc($reader->country( ip => $param )->country()->iso_code()); 1 } if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
@@ -207,7 +207,7 @@ sub ShowInfoHost_geoip2 {
                 # Now do the same lookup from the IP
                 # GeoIP2::Reader doesn't support private IP addresses
                 if (!is_private_ip($address)){
-                if (!$res){eval { $res=lc($reader->country( ip => $address )->country()->iso_code()); 1 } || $res='unknown' if $reader;}
+                if (!$res){eval { $res=lc($reader->country( ip => $address )->country()->iso_code()); 1 } if $reader;}
                 if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
                 if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
                 else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
